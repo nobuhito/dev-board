@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Dev:BOARD</title>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="author" content="nobuhito.sato@gmail.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/dev-board/css/dist/bootstrap.min.css">
+  <link rel="stylesheet" href="/dev-board/css/dist/card.css">
+  <link rel="stylesheet" href="/dev-board/css/dist/font-awesome.min.css">
+  <link rel="stylesheet" href="/dev-board/css/dist/github.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo:700italic">
+  <link rel="stylesheet" href="/dev-board/css/style.css">
+  <!--&#91;if lt IE 9&#93;>
+<script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+<!&#91;endif&#93;-->
+  <link rel="shortcut icon" href="">
+</head>
+<body>
+  <nav class="navbar navbar-default">
+    <div class="navbar-header">
+      <button type="button"
+              class="navbar-toggle collapsed"
+              data-toggle="collapse"
+              data-target="#option"
+              aria-expanded="true"
+              id="nav-button">
+      </button>
+      <a href="#" class="navbar-brand sort_a">
+      Dev:BOARD
+    </a>
+    </div>
+    <div id="option" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right" id="nav-dropdown"></ul>
+    </div>
+  </nav>
+  <div id="list"></div>
+  <footer class="footer">
+    <div class="container">
+      <p class="text-muted">
+        Dev:BOARD
+        <br /> Code and documentation copyright 2015 Nobuhito.SATO.
+        <br /> Code released under the MIT license.
+        <br /> Docs released under Creative Commons.
+        <br />
+      </p>
+    </div>
+  </footer>
+  <script src="/dev-board/script/dist/jquery.min.js"></script>
+  <script src="/dev-board/script/dist/bootstrap.min.js"></script>
+  <script src="/dev-board/script/dist/highlight.pack.js"></script>
+  <script src="/dev-board/script/dist/moment.min.js"></script>
+  <script src="/dev-board/script/script.js"></script>
+  <script src="/dev-board/script/plugins/atomio.js"></script>
+  <script src="/dev-board/script/plugins/github.js"></script>
+  <script src="/dev-board/script/plugins/qiita.js"></script>
+  <script src="/dev-board/script/plugins/tumblr.js"></script>
+  <script>
+    main()
+  </script>
+</body>
+</html>
