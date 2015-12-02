@@ -63,4 +63,4 @@ Dev:BOARD is customizable board for developer.
 
 ## Author
 
-Nobuhito SATO  [Dev:BOARD](https://nobuhito.github.io/dev-board/) [Gmail](nobuhito.sato@gmail.com)
+Nobuhito SATO  [Dev:BOARD](http://nobuhito.github.io/dev-board/) [Gmail](nobuhito.sato@gmail.com)
