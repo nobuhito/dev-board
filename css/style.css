@@ -103,6 +103,13 @@ div.meta.tumblr {
   color: #34526f;
 }
 
+p.quote.wordpress {
+  border-left-color: #33B7E0;
+}
+div.meta.wordpress {
+  color: #33B7E0;
+}
+
 .navbar a.navbar-brand {
   font-family: 'Arvo', sans-serif;
   font-size: 180%;

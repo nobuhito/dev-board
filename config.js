@@ -14,6 +14,9 @@ config = {
     },
     "Atom.io": {
       user: "nobuhito"
+    },
+    "Wordpress": {
+      user: "nobuhito"
     }
   }
 };
