@@ -1,5 +1,4 @@
 (function() {
-  var name = "nobuhito";
 
   var obj = {};
 
@@ -9,7 +8,7 @@
 
   obj.getData = function() {
     return new Promise(function(resolve, reject) {
-      var url = "https://qiita.com/api/v1/users/" + name + "/items?per_page=100";
+      var url = "https://qiita.com/api/v1/users/" + config.plugins[obj.name].user + "/items?per_page=100";
       $.ajax({
         url: url,
         dataType: "json",

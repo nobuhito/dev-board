@@ -1,6 +1,5 @@
 // https://api.github.com/users/nobuhito/repos
 (function() {
-  var name = "nobuhito";
 
   var execlude = [
     "atom-export-html",
@@ -16,7 +15,7 @@
 
   obj.name = "Atom.io";
   obj.favicon = "https://atom.io/favicon.ico";
-  obj.home = "https://atom.io/users/" + name;
+  obj.home = "https://atom.io/users/" + config.plugins[obj.name].user;
 
   obj.modData = function(data) {
 

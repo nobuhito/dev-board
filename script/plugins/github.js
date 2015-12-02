@@ -1,6 +1,5 @@
 // https://api.github.com/users/nobuhito/repos
 (function() {
-  var name = "nobuhito";
 
   var obj = {};
 
@@ -10,7 +9,7 @@
 
   obj.getData = function() {
     return new Promise(function(resolve, reject) {
-      var url = "https://api.github.com/users/" + name + "/repos?sort=pushed&direction=desc&per_page=100";
+      var url = "https://api.github.com/users/" + config.plugins[obj.name].user + "/repos?sort=pushed&direction=desc&per_page=100";
       $.ajax({
         url: url,
         dataType: "jsonp",

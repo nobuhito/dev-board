@@ -1,6 +1,5 @@
 (function() {
 // http://laughingredbird.tumblr.com/api/read/json?num=50
-var name = "laughingredbird";
 
 var obj = {};
 
@@ -10,7 +9,7 @@ obj.home = "http://" + name + ".tumblr.com/";
 
 obj.getData = function() {
   return new Promise(function(resolve, reject) {
-    var url = "http://" + name + ".tumblr.com/api/read/json?num=50";
+    var url = "http://" + config.plugins[obj.name].user + ".tumblr.com/api/read/json?num=50";
     $.ajax({
       url: url,
       dataType: "jsonp",
