@@ -1,5 +1,7 @@
 config = {
-  core: {},
+  core: {
+    gacode: "UA-45088271-4" // google-analytics
+  },
   plugins: {
     "GitHub": {
       user: "nobuhito"
