@@ -1,6 +1,8 @@
 config = {
   core: {
-    gacode: "UA-45088271-4" // google-analytics
+    gacode: "UA-45088271-4",  // google-analytics
+    transition: "fadeIn",
+    speed: "slow"
   },
   plugins: {
     "GitHub": {

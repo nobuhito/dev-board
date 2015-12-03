@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Dev:BOARD</title>
@@ -14,11 +15,11 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Arvo:700italic">
   <link rel="stylesheet" href="/dev-board/css/style.css">
   <!--&#91;if lt IE 9&#93;>
-<script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
-<!&#91;endif&#93;-->
-  <link rel="shortcut icon" href="">
+  <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+  <!&#91;endif&#93;-->  <link rel="shortcut icon" href="">
 </head>
+
 <body>
   <nav class="navbar navbar-default">
     <div class="navbar-header">
@@ -29,15 +30,16 @@
               aria-expanded="true"
               id="nav-button">
       </button>
-      <a href="#" class="navbar-brand sort_a">
-      Dev:BOARD
-    </a>
+      <a href="#" class="navbar-brand sort_a" id="logo">
+        Dev:BOARD
+      </a>
     </div>
     <div id="option" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right" id="nav-dropdown"></ul>
     </div>
   </nav>
   <div id="list"></div>
+  <div style="clear:both"></div>
   <footer class="footer">
     <div class="container">
       <p class="text-muted">
@@ -65,4 +67,5 @@
     main()
   </script>
 </body>
+
 </html>

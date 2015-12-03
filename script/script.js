@@ -7,9 +7,12 @@ var plugins = {};
 colCount = 0;
 
 function main() {
-  console.log("main");
 
   googleAnalytics();
+
+  $("#logo").bind("click", function() {
+    location.reload();
+  });
 
   $("#list").text("");
 
@@ -26,8 +29,8 @@ function main() {
   if (cache) {
     devBoard.map(function(p) { plugins[p.name] = p; });
     datas = cache.data;
-    mergeData(datas, function(cards) {
-      renderData(cards);
+    mergeData(datas, function(data) {
+      renderData(data);
     });
   } else {
     getData(function(datas, cb) {
@@ -37,7 +40,6 @@ function main() {
 }
 
 function getData(cb) {
-  console.log("getData");
   Promise
     .all(
       devBoard
@@ -57,7 +59,6 @@ function getData(cb) {
 }
 
 function modData(datas, cb) {
-  console.log("modData");
   Promise
     .all(
       devBoard
@@ -85,7 +86,7 @@ function modData(datas, cb) {
 
       var now = moment().format("x");
       sessionStorage.setItem("cache", JSON.stringify({datetime: now, data: datas, plugins: plugins}));
-      //$("body").attr("data-cache", JSON.stringify(datas));
+
       cb(datas, function(cards) {
         renderData(cards);
       });
@@ -93,58 +94,34 @@ function modData(datas, cb) {
 }
 
 function mergeData(datas, cb) {
-  console.log("mergeData");
   var data = [];
   var since = moment().subtract(12, "M").format("x");
   var hash = location.hash;
   var type = (hash)? location.hash.replace("#", "").split("_")[0]: hash;
   var sort = (hash)? location.hash.replace("#", "").split("_").slice(1).join("_"): hash;
-  console.log(type, sort);
+
   for (var j in datas) {
     var result = datas[j].data;
-    if (type && datas[j].type.toLowerCase() !== type.toLowerCase()) continue;
+    if (type !== "" && datas[j].type.toLowerCase() !== type.toLowerCase()) continue;
     for (var k in result) {
-      if (!type && result[k].update_at_dev_board < since) { continue; }
+      if (type === "" && result[k].update_at_dev_board < since) { continue; }
       data.push(result[k]);
     }
   }
-  data = data.sort(function(a, b) {
-    if (sort) {
+
+  var sortData = data.sort(function(a, b) {
+    if (sort !== "") {
       return (a[sort] > b[sort])? -1: 1;
     }
     return (a.update_at_dev_board > b.update_at_dev_board)? -1: 1;
   });
 
-  cards = [];
-  for (var i in data) {
-
-    if (data.hasOwnProperty(i)) {
-      var item = data[i];
-      var card = plugins[item.type_of_dev_board].card(item, plugins);
-      var link = (plugins[item.type_of_dev_board].hasOwnProperty("home"))?
-        plugins[item.type_of_dev_board].home: "#";
-      if (plugins[item.type_of_dev_board].hasOwnProperty("favicon")) {
-        $("<div>")
-          .addClass("favicon")
-          .append(
-            $("<a>")
-              .attr("href", link)
-              .append(
-                $("<img>")
-                  .attr("src", plugins[item.type_of_dev_board].favicon)
-              )
-          )
-          .appendTo(card);
-      }
-      cards.push(card);
-    }
-  }
-  cb(cards);
+  cb(sortData);
 }
 
 var resizeTimer = false;
 function renderData(cards) {
-  console.log("renderData");
+
   layout(cards);
 
   addMenu(plugins);
@@ -152,8 +129,9 @@ function renderData(cards) {
   $("div.highlight").each(function(i, block) {
     hljs.highlightBlock(block);
   });
+
   sort_bind();
-  //resize();
+
   $(window).resize(function() {
     // http://kadoppe.com/archives/2012/02/jquery-window-resize-event.html
     if (resizeTimer !== false) {
@@ -162,8 +140,6 @@ function renderData(cards) {
     resizeTimer = setTimeout(function() {
       main();
     }, 200);
-    //location.reload();
-    //resize();
   });
 }
 
@@ -275,54 +251,74 @@ function addMenu(plugins) {
   }
 }
 
-function layout(cards) {
+function layout(data) {
 
   $("#list").rtile(
     {
-      speed: 2000,
-      cb: function() {
-        var column = $($(".col_0")[0]);
-        var columnWidth = column.width() - 2;
-        $(this).find("img.thumbnail").each(function(i, img) {
-
-          var image = new Image();
-          image.src = img.src;
-          var elm = this;
-          $(image).bind("load", {elm: this}, function(event) {
-            var per = columnWidth / this.width;
-            $(event.data.elm)
-              .css({
-                height: img.height + "px",
-                width: img.width + "px",
-                "max-height": img.height * per + "px",
-                "max-width": img.width * per + "px"
-              });
-          });
-
-
-
-        });
-      }
+      transition: config.core.transition || "fadeIn",
+      speed: config.core.speed || "slow"
     }
   );
 
-  cards.forEach(function(card, i) {
-    $("#list").rtile("add", card);
-  });
-}
+  var column = $($(".col_0")[0]);
+  var columnWidth = column.width();
 
-function hash_min(hash) {
-  minKey = 0;
-  minVal = hash[0].val;
-  for (var i in hash) {
-    if (i > 0) {
-      if (hash[i].val < minVal) {
-        minVal = hash[i].val;
-        minKey = i;
-       }
-    }
+  data.reduce(function(promise, item) {
+    return promise.then(function() {
+      return addCard(item);
+    });
+  }, Promise.resolve());
+
+  function addCard(item) {
+    return new Promise(function(resolve, reject) {
+      var card = plugins[item.type_of_dev_board].card(item, plugins);
+      var link = (plugins[item.type_of_dev_board].hasOwnProperty("home"))?
+        plugins[item.type_of_dev_board].home: "#";
+
+      var thumbnail = card.find("img.thumbnail");
+
+      if (plugins[item.type_of_dev_board].hasOwnProperty("favicon")) {
+        $("<div>")
+          .addClass("favicon")
+          .append(
+            $("<a>")
+              .attr("href", link)
+              .append(
+                $("<img>")
+                  .attr("src", plugins[item.type_of_dev_board].favicon)
+              )
+          )
+          .appendTo(card);
+      }
+
+      if (thumbnail[0]) {
+        thumbnail.each(function(i, img) {
+          var image = new Image();
+          image.src = img.src;
+          img.src = "";
+          // var elm = this;
+          $(image).bind("load", {elm: img}, function(event) {
+            var per = columnWidth / this.width;
+            $(event.data.elm)
+              .attr("src", this.src)
+              .attr("width", this.width + "px")
+              .attr("height", this.height + "px")
+              .css({
+                "height": "99%",
+                "width": "99%"
+              });
+
+            $("#list").rtile("add", card);
+            resolve();
+          });
+        });
+      } else {
+
+        $("#list").rtile("add", card);
+        resolve();
+      }
+    });
   }
-  return minKey;
 }
 
 function sort_bind() {
@@ -334,39 +330,6 @@ function sort_bind() {
   });
 }
 
-function resize() {
-  var column = $($(".col_0")[0]);
-  var columnWidth = column.width() - 2;
-  $(".thumbnail").each(function() {
-    //console.log(this);
-    var src = this.src;
-    var img = new Image();
-    img.src = src;
-    var elm = this;
-    $(img).bind("load", {elm: elm}, function(event) {
-      var per = columnWidth / this.width;
-      $(event.data.elm)
-        .css({
-          height: img.height + "px",
-          width: img.width + "px",
-          "max-height": img.height * per + "px",
-          "max-width": img.width * per + "px"
-        });
-    });
-  });
-}
-
-function loadImage(url, elm) {
-  var img = new Image();
-  img.src = url;
-  $(img).bind("load", function() {
-    $(elm)
-      .attr("height", img.height)
-      .attr("width", img.width);
-  });
-}
-
-
 function unescapeHTML(str) {
   // http://blog.tojiru.net/article/211339637.html
   return str
@@ -374,6 +337,7 @@ function unescapeHTML(str) {
           .replace(/&gt;/g,'>')
           .replace(/&amp;/g,'&');
 }
+
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)

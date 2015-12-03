@@ -5,14 +5,15 @@
   var methods = {
     init: function(options) {
       settings = $.extend({
-        "minWidth": 320,
+        "minWidth": 640,
         "transition": "slideIn", // fadeIn or slideIn
-        "speed": "slow"
+        "speed": "slow",
+        cb: function(){}
       }, options);
 
-      colCount = ($(window).width() <= settings.minWidth)? 1:
-                 ($(window).width() <= settings.minWidth * 2)? 2:
-                 3;
+      colCount = ($(window).width() < settings.minWidth)?     1:
+                 ($(window).width() < settings.minWidth * 1.5)? 2:
+                                                              3;
 
       $(this).text("");
 
@@ -40,10 +41,11 @@
         $.error("Does not initialize on jQuery.rtile");
       }
 
+      var colCount = $(this).data("plugin_rtile_col_count");
       var counter = $(this).data("plugin_rtile_item_count") || 0;
       var heights = $(this).data("plugin_rtile_heights") || [];
 
-      var maxVal = heights[0];
+      var maxVal = 0;
       var minVal = heights[0];
       if (counter < colCount) {
         heights[counter] = append($(".col_" + counter), element, settings);
@@ -61,16 +63,12 @@
             }
           }
         }
-        heights[min] = append($(".col_" + min), element, settings);
+        heights[min] = heights[min] + append($(".col_" + min), element, settings);
       }
-
-      $(this).height(maxVal);
 
       counter++;
       $(this).data("plugin_rtile_item_count", counter);
       $(this).data("plugin_rtile_heights", heights);
-
-      console.log(heights);
 
       return this;
     }
@@ -108,7 +106,7 @@ function appendFadeIn(target, element, settings) {
   if (typeof(settings.cb) === "function") {
     settings.cb.call(element);
   }
-  return target.height();
+  return element.outerHeight();
 }
 
 function appendSlideIn(target, element, settings) {
@@ -125,5 +123,5 @@ function appendSlideIn(target, element, settings) {
   if (typeof(settings.cb) === "function") {
     settings.cb.call(element);
   }
-  return target.height();
+  return element.outerHeight();
 }
