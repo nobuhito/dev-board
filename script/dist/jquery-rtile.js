@@ -70,6 +70,8 @@
       $(this).data("plugin_rtile_item_count", counter);
       $(this).data("plugin_rtile_heights", heights);
 
+      console.log(heights);
+
       return this;
     }
   };
@@ -103,7 +105,10 @@ function appendFadeIn(target, element, settings) {
   setTimeout(function() {
     element.fadeTo(settings.speed, 1);
   }, 100);
-  return element.height();
+  if (typeof(settings.cb) === "function") {
+    settings.cb.call(element);
+  }
+  return target.height();
 }
 
 function appendSlideIn(target, element, settings) {
@@ -117,5 +122,8 @@ function appendSlideIn(target, element, settings) {
       settings.speed,
       "swing");
   }, 100);
-  return element.height();
+  if (typeof(settings.cb) === "function") {
+    settings.cb.call(element);
+  }
+  return target.height();
 }

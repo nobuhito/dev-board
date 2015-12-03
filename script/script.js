@@ -153,7 +153,7 @@ function renderData(cards) {
     hljs.highlightBlock(block);
   });
   sort_bind();
-  resize();
+  //resize();
   $(window).resize(function() {
     // http://kadoppe.com/archives/2012/02/jquery-window-resize-event.html
     if (resizeTimer !== false) {
@@ -277,7 +277,34 @@ function addMenu(plugins) {
 
 function layout(cards) {
 
-  $("#list").rtile({speed: 2000});
+  $("#list").rtile(
+    {
+      speed: 2000,
+      cb: function() {
+        var column = $($(".col_0")[0]);
+        var columnWidth = column.width() - 2;
+        $(this).find("img.thumbnail").each(function(i, img) {
+
+          var image = new Image();
+          image.src = img.src;
+          var elm = this;
+          $(image).bind("load", {elm: this}, function(event) {
+            var per = columnWidth / this.width;
+            $(event.data.elm)
+              .css({
+                height: img.height + "px",
+                width: img.width + "px",
+                "max-height": img.height * per + "px",
+                "max-width": img.width * per + "px"
+              });
+          });
+
+
+
+        });
+      }
+    }
+  );
 
   cards.forEach(function(card, i) {
     $("#list").rtile("add", card);
@@ -311,9 +338,34 @@ function resize() {
   var column = $($(".col_0")[0]);
   var columnWidth = column.width() - 2;
   $(".thumbnail").each(function() {
-    $(this).css("width", columnWidth);
+    //console.log(this);
+    var src = this.src;
+    var img = new Image();
+    img.src = src;
+    var elm = this;
+    $(img).bind("load", {elm: elm}, function(event) {
+      var per = columnWidth / this.width;
+      $(event.data.elm)
+        .css({
+          height: img.height + "px",
+          width: img.width + "px",
+          "max-height": img.height * per + "px",
+          "max-width": img.width * per + "px"
+        });
+    });
   });
 }
+
+function loadImage(url, elm) {
+  var img = new Image();
+  img.src = url;
+  $(img).bind("load", function() {
+    $(elm)
+      .attr("height", img.height)
+      .attr("width", img.width);
+  });
+}
+
 
 function unescapeHTML(str) {
   // http://blog.tojiru.net/article/211339637.html
