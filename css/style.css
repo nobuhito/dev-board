@@ -31,8 +31,8 @@ img.thumbnail, pre.thumbcode {
   border: none;
 }
 
-div.cols {
-  float: left;
+div.rtile {
+  // float: left;
   padding-right: 15px;
   padding-left: 15px;
 }

@@ -277,27 +277,10 @@ function addMenu(plugins) {
 
 function layout(cards) {
 
-  for (var i=0; i<colCount; i++) {
-    $("#list")
-      .addClass("row")
-      .append(
-        $("<div>")
-        .addClass("col_" + i)
-        .addClass("cols")
-        .css("width", (100/colCount) + "%")
-      );
-  }
+  $("#list").rtile({speed: 2000});
 
   cards.forEach(function(card, i) {
-    heights = [];
-    min = i;
-    if (i >= 3) {
-      for (var col=0; col<colCount; col++) {
-        heights.push({key: col, val: $(".col_" + col).height()});
-      }
-      min = hash_min(heights);
-    }
-    $(".col_" + min).append(card);
+    $("#list").rtile("add", card);
   });
 }
 
@@ -325,7 +308,7 @@ function sort_bind() {
 }
 
 function resize() {
-  var column = $($(".cols")[0]);
+  var column = $($(".col_0")[0]);
   var columnWidth = column.width() - 2;
   $(".thumbnail").each(function() {
     $(this).css("width", columnWidth);
