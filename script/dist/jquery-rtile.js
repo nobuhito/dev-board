@@ -66,6 +66,7 @@ function run() {
       }
       counter++;
       var item = items.shift();
+      Platform.performMicrotaskCheckpoint();
     });
 }
 
@@ -129,6 +130,7 @@ function run() {
     add: function(element) {
       setTimeout(function() {
         items.push(element);
+        Platform.performMicrotaskCheckpoint();
       }, 1);
 
       return this;

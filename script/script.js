@@ -130,15 +130,17 @@ function renderData(cards) {
   });
 
   sort_bind();
-
+  var windowWidth = $(window).width();
   $(window).resize(function() {
     // http://kadoppe.com/archives/2012/02/jquery-window-resize-event.html
     if (resizeTimer !== false) {
       clearTimeout(resizeTimer);
     }
     resizeTimer = setTimeout(function() {
-      $("#list").rtile("stop");
-      main();
+      if (windowWidth !== $(window).width()) {
+        $("#list").rtile("stop");
+        main();
+      }
     }, 1);
   });
 }
