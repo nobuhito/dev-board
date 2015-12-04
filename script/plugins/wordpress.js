@@ -15,7 +15,6 @@
         success: function(data) {
           data = data.posts
             .map(function(item) {
-              console.log(item.modified);
               item.update_at_dev_board = moment(item.modified, "YYYY-MM-DDTHH:mm:ssZ").format("x");
               item.type_of_dev_board = obj.name;
               item.comment_count = item.discussion.comment_count || 0;

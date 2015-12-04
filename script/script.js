@@ -7,7 +7,6 @@ var plugins = {};
 colCount = 0;
 
 function main() {
-
   googleAnalytics();
 
   $("#logo").bind("click", function() {
@@ -138,8 +137,9 @@ function renderData(cards) {
       clearTimeout(resizeTimer);
     }
     resizeTimer = setTimeout(function() {
+      $("#list").rtile("stop");
       main();
-    }, 200);
+    }, 1);
   });
 }
 
@@ -263,70 +263,39 @@ function layout(data) {
   var column = $($(".col_0")[0]);
   var columnWidth = column.width();
 
-  data.reduce(function(promise, item) {
-    return promise.then(function() {
-      return addCard(item);
-    });
-  }, Promise.resolve());
+  for (var i in data) {
+    var item = data[i];
+    var card = plugins[item.type_of_dev_board].card(item, plugins);
+    var link = (plugins[item.type_of_dev_board].hasOwnProperty("home"))?
+      plugins[item.type_of_dev_board].home: "#";
 
-  function addCard(item) {
-    return new Promise(function(resolve, reject) {
-      var card = plugins[item.type_of_dev_board].card(item, plugins);
-      var link = (plugins[item.type_of_dev_board].hasOwnProperty("home"))?
-        plugins[item.type_of_dev_board].home: "#";
-
-      var thumbnail = card.find("img.thumbnail");
-
-      if (plugins[item.type_of_dev_board].hasOwnProperty("favicon")) {
-        $("<div>")
-          .addClass("favicon")
-          .append(
-            $("<a>")
-              .attr("href", link)
-              .append(
-                $("<img>")
-                  .attr("src", plugins[item.type_of_dev_board].favicon)
-              )
-          )
-          .appendTo(card);
-      }
-
-      if (thumbnail[0]) {
-        thumbnail.each(function(i, img) {
-          var image = new Image();
-          image.src = img.src;
-          img.src = "";
-          // var elm = this;
-          $(image).bind("load", {elm: img}, function(event) {
-            var per = columnWidth / this.width;
-            $(event.data.elm)
-              .attr("src", this.src)
-              .attr("width", this.width + "px")
-              .attr("height", this.height + "px")
-              .css({
-                "height": "99%",
-                "width": "99%"
-              });
-
-            $("#list").rtile("add", card);
-            resolve();
-          });
-        });
-      } else {
-
-        $("#list").rtile("add", card);
-        resolve();
-      }
-    });
+    if (plugins[item.type_of_dev_board].hasOwnProperty("favicon")) {
+      $("<div>")
+        .addClass("favicon")
+        .append(
+          $("<a>")
+            .attr("href", link)
+            .append(
+              $("<img>")
+                .attr("src", plugins[item.type_of_dev_board].favicon)
+                .attr("width", "32px")
+                .attr("height", "32px")
+            )
+        )
+        .appendTo(card);
+    }
+    $("<div>").text(i).appendTo(card);
+    $("#list").rtile("add", card);
   }
 }
 
 function sort_bind() {
   $(".sort_a").on("click", function() {
     setTimeout(function() {
+      $("#list").rtile("stop");
       main();
       //location.reload();
-    }, 100);
+    }, 1);
   });
 }
 
