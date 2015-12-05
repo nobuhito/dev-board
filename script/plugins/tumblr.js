@@ -5,7 +5,7 @@ var obj = {};
 
 obj.name = "Tumblr";
 obj.favicon = "https://secure.assets.tumblr.com/images/logo_page/img_logo_bluebg_2x.png";
-obj.home = "http://" + name + ".tumblr.com/";
+obj.home = "http://" + config.plugins[obj.name].user + ".tumblr.com/";
 
 obj.getData = function() {
   return new Promise(function(resolve, reject) {

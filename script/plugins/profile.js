@@ -1,7 +1,7 @@
 (function() {
   var obj = [];
   obj.name = "HOME";
-  obj.home = "http://" + config.plugins.GitHub.name + ".github.io/dev-board/";
+  obj.home = "http://" + config.plugins.GitHub.user + ".github.io/dev-board/";
   obj.favicon = config.plugins[obj.name].favicon || "image/profile.jpg";
 
   obj.getData = function() {
@@ -11,7 +11,6 @@
       data = {
         update_at_dev_board: moment().format("x"),
         type_of_dev_board: obj.name,
-        items: c.items,
         description: c.description,
         user: c.user,
         home: obj.home
@@ -27,11 +26,13 @@
       }
     }
 
-    var items = [];
+    var items = config.plugins[obj.name].links;
     for (var name in config.plugins) {
-      items.push({name: name, link: config.plugins[name].home});
+      var link = (config.plugins[obj.name].links[name] !== undefined)?
+        config.plugins[obj.name].links[name]: config.plugins[name].home;
+      items[name] = link;
     }
-    home[0].items = $.extend(items, home[0].items);
+    home[0].items = items;
 
     return {type: obj.name, data: home};
   };
@@ -56,9 +57,16 @@
       .html(item.description)
       .appendTo(card);
 
-    var items = item.items.map(function(d) {
-      return "<li><a href='" + d.link + "'>" + d.name + "</a></li>";
-    }).join("");
+    var items = [];
+    for (var name in item.items) {
+      if (name === obj.name) { continue; }
+      if (name === "Email") {
+        items.push("<li><a href='mailto:" + item.items[name] + "'>" + name + "</a</li>");
+      } else {
+        items.push("<li><a href='" + item.items[name] + "'>" + name + "</a></li>");
+      }
+    }
+    items = items.join("");
     $("<div>")
       .addClass("card-block")
       .addClass("description")

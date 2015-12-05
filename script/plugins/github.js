@@ -5,7 +5,7 @@
 
   obj.name = "GitHub";
   obj.favicon = "https://assets-cdn.github.com/favicon.ico";
-  obj.home = "https://github.com/" + name;
+  obj.home = "https://github.com/" + config.plugins[obj.name].user;
 
   obj.getData = function() {
     return new Promise(function(resolve, reject) {

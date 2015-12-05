@@ -4,7 +4,7 @@
 
   obj.name = "Qiita";
   obj.favicon = "http://qiita.com/icons/favicons/public/apple-touch-icon.png";
-  obj.home = "http://qiita.com/" + name;
+  obj.home = "http://qiita.com/" + config.plugins[obj.name].user;
 
   obj.getData = function() {
     return new Promise(function(resolve, reject) {

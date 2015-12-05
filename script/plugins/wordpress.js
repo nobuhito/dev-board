@@ -2,6 +2,7 @@
   var obj = {};
   obj.name = "Wordpress";
   obj.favicon = "https://s1.wp.com/i/favicons/favicon-64x64.png";
+  obj.home = "https://" + config.plugins[obj.name].user + ".wordpress.com/";
   obj.getData = function() {
     return new Promise(function(resolve, reject) {
       var url = "https://public-api.wordpress.com/rest/v1.1/sites/" + config.plugins.Wordpress.user + ".wordpress.com/posts/";

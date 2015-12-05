@@ -8,9 +8,9 @@ config = {
     "HOME": {
       user: "Nobuhito SATO",
       description: "無いものは作る、欲しいものも作る",
-      items: [
-        {name: "Email", link: "nobuhito.sato@gmail.com"}
-      ]
+      links: {
+        "Email": "nobuhito.sato@gmail.com"
+      }
     },
     "GitHub": {
       user: "nobuhito"

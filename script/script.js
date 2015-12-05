@@ -44,6 +44,7 @@ function getData(cb) {
       devBoard
         .filter(function(p) {
           plugins[p.name] = p;
+          config.plugins[p.name].home = p.home || "";
           return (p.hasOwnProperty("getData"));
         })
         .map(function(p) {
