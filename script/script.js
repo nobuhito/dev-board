@@ -44,7 +44,7 @@ function getData(cb) {
       devBoard
         .filter(function(p) {
           plugins[p.name] = p;
-          return (plugins[p.name].hasOwnProperty("getData"));
+          return (p.hasOwnProperty("getData"));
         })
         .map(function(p) {
           return p.getData();
@@ -251,6 +251,11 @@ function addMenu(plugins) {
         dropdown
       );
   }
+  $("#option").find("a").each(function() {
+    if ($(this).attr("href") === "#home_") {
+      $(this).attr("href", "#");
+    }
+  });
 }
 
 function layout(data) {
@@ -268,6 +273,7 @@ function layout(data) {
   for (var i in data) {
     var item = data[i];
     var card = plugins[item.type_of_dev_board].card(item, plugins);
+
     var link = (plugins[item.type_of_dev_board].hasOwnProperty("home"))?
       plugins[item.type_of_dev_board].home: "#";
 
