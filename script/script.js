@@ -4,7 +4,6 @@ $("body").removeClass("container");
 
 var plugins = {};
 
-colCount = 0;
 
 function main() {
   googleAnalytics();
@@ -14,8 +13,6 @@ function main() {
   });
 
   $("#list").text("");
-
-  colCount = ($(window).width() <= 640)? 1: ($(window).width() <= 800)? 2: 3;
 
   var cache = JSON.parse(sessionStorage.getItem("cache"));
   if (cache) {
@@ -267,9 +264,6 @@ function layout(data) {
       speed: config.core.speed || "slow"
     }
   );
-
-  var column = $($(".col_0")[0]);
-  var columnWidth = column.width();
 
   for (var i in data) {
     var item = data[i];

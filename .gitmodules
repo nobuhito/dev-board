@@ -1,0 +1,4 @@
+[submodule "script/dist/jquery-rtile"]
+	path = script/dist/jquery-rtile
+	url = https://github.com/nobuhito/jquery-rtile.git
+	branch = master
