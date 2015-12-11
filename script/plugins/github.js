@@ -22,8 +22,9 @@
           // console.log(data);
           data = data.data
             .map(function(item) {
-              var unixtime_pushed = moment(item.pushed_at, "YYYY-MM-DDTHH:mm:ssz").unix();
-              var unixtime_updated = moment(item.updated_at, "YYYY-MM-DDTHH:mm:ssz").unix();
+              console.log(item);
+              var unixtime_pushed = moment(item.pushed_at, "YYYY-MM-DDTHH:mm:ssZ").unix();
+              var unixtime_updated = moment(item.updated_at, "YYYY-MM-DDTHH:mm:ssZ").unix();
               var unixtime = (unixtime_pushed > unixtime_updated)? unixtime_pushed: unixtime_updated;
               item.update_at_dev_board = unixtime;
               item.type_of_dev_board = obj.name;
