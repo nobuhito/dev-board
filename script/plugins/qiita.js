@@ -19,7 +19,7 @@
         success: function(data) {
           data = data
             .map(function(item) {
-              unixtime = moment(item.updated_at, "YYYY-MM-DD HH:mm:ss ZZ").format("x");
+              unixtime = moment(item.updated_at, "YYYY-MM-DD HH:mm:ss ZZ").unix();
               item.update_at_dev_board = unixtime;
               item.type_of_dev_board = obj.name;
               return item;
@@ -51,7 +51,7 @@
 
     var metas = [
       "<span class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></span>",
-      moment(item.update_at_dev_board, "x").fromNow(),
+      moment.unix(item.update_at_dev_board).fromNow(),
       "<span class=\"fa fa-comment-o\" aria-hidden=\"true\"></span>",
       item.comment_count,
       "<span class=\"fa fa-shopping-basket\" aria-hidden=\"true\"></span>",

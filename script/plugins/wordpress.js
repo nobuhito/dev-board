@@ -16,7 +16,7 @@
         success: function(data) {
           data = data.posts
             .map(function(item) {
-              item.update_at_dev_board = moment(item.modified, "YYYY-MM-DDTHH:mm:ssZ").format("x");
+              item.update_at_dev_board = moment(item.modified, "YYYY-MM-DDTHH:mm:ssZ").unix();
               item.type_of_dev_board = obj.name;
               item.comment_count = item.discussion.comment_count || 0;
               return item;
@@ -40,14 +40,14 @@
           .append(
             $("<a>")
               .addClass("headertitle")
-              .attr("href", item.url)
+              .attr("href", item.short_URL)
               .text(item.title)
           )
       ).appendTo(card);
 
     var metas = [
       "<span class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></span>",
-      moment(item.update_at_dev_board, "x").fromNow(),
+      moment.unix(item.update_at_dev_board).fromNow(),
       "<span class=\"fa fa-comment-o\" aria-hidden=\"true\"></span>",
       item.comment_count,
       "<span class=\"fa fa-heart-o\" aria-hidden=\"true\"></span>",

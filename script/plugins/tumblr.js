@@ -22,8 +22,7 @@ obj.getData = function() {
         // console.log(data);
         data = data.posts
           .map(function(item) {
-            unixtime = moment(item["date-gmt"], "YYYY-MM-DD HH:mm:ss Z").format("x");
-            item.update_at_dev_board = unixtime;
+            item.update_at_dev_board = item["unix-timestamp"];
             item.type_of_dev_board = obj.name;
             return item;
           });
@@ -58,7 +57,7 @@ obj.card = function(item) {
 
   var metas = [
     "<span class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></span>",
-    moment(item.update_at_dev_board, "x").fromNow()
+    moment.unix(item.update_at_dev_board).fromNow()
   ].join("");
 
   $("<div>")

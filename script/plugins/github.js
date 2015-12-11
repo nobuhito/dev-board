@@ -22,8 +22,8 @@
           // console.log(data);
           data = data.data
             .map(function(item) {
-              var unixtime_pushed = moment(item.pushed_at, "YYYY-MM-DDTHH:mm:ssz").format("x");
-              var unixtime_updated = moment(item.updated_at, "YYYY-MM-DDTHH:mm:ssz").format("x");
+              var unixtime_pushed = moment(item.pushed_at, "YYYY-MM-DDTHH:mm:ssz").unix();
+              var unixtime_updated = moment(item.updated_at, "YYYY-MM-DDTHH:mm:ssz").unix();
               var unixtime = (unixtime_pushed > unixtime_updated)? unixtime_pushed: unixtime_updated;
               item.update_at_dev_board = unixtime;
               item.type_of_dev_board = obj.name;
@@ -57,7 +57,7 @@
 
     var metas = [
       "<span class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></span>",
-      moment(item.update_at_dev_board, "x").fromNow(),
+      moment.unix(item.update_at_dev_board).fromNow(),
       "<span class=\"fa fa-exclamation\" aria-hidden=\"true\"></span>",
       item.open_issues_count,
       "<span class=\"fa fa-code-fork\" aria-hidden=\"true\"></span>",

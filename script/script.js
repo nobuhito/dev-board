@@ -16,8 +16,8 @@ function main() {
 
   var cache = JSON.parse(sessionStorage.getItem("cache"));
   if (cache) {
-    var expires = moment(cache.datetime, "x").add(12, 'hours').format("x");
-    if (expires < moment().format("x")) {
+    var expires = moment(cache.datetime, "x").add(12, 'hours').unix();
+    if (expires < moment().unix()) {
       cache = undefined;
     }
   }
@@ -81,7 +81,7 @@ function modData(datas, cb) {
         }
       }
 
-      var now = moment().format("x");
+      var now = moment().unix();
       sessionStorage.setItem("cache", JSON.stringify({datetime: now, data: datas, plugins: plugins}));
 
       cb(datas, function(cards) {
@@ -92,7 +92,7 @@ function modData(datas, cb) {
 
 function mergeData(datas, cb) {
   var data = [];
-  var since = moment().subtract(12, "M").format("x");
+  var since = moment().subtract(12, "M").unix();
   var hash = location.hash;
   var type = (hash)? location.hash.replace("#", "").split("_")[0]: hash;
   var sort = (hash)? location.hash.replace("#", "").split("_").slice(1).join("_"): hash;
@@ -287,7 +287,6 @@ function layout(data) {
         )
         .appendTo(card);
     }
-    $("<div>").text(i).appendTo(card);
     $("#list").rtile("add", card);
   }
 }
