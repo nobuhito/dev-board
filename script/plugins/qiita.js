@@ -30,7 +30,7 @@
     });
   };
 
-  var image_reg = /<img.*src\s?=\s?['"](.+?)["'].*?\/?>/i;
+  var image_reg = /<img.*src\s?=\s?['"](http.+?)["'].*?\/?>/i;
   var code_reg = /<pre>([\s\S]*?)<\/pre>/i;
   obj.card = function(item) {
     // console.log(item);
