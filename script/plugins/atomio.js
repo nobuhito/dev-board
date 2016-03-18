@@ -78,7 +78,6 @@
           atom.atom_url = "https://atom.io/packages/" + url.split("/").slice(-1);
           atom.atom_name = data.name;
           atom.type_of_dev_board = obj.name;
-          console.log(atom);
           resolve(atom);
         }
       });
@@ -108,7 +107,7 @@
 
     var githubMetas = [
       "<span class=\"fa fa-pencil-square-o\" aria-hidden=\"true\"></span>",
-      moment(item.update_at_dev_board, "x").fromNow(),
+      moment.unix(item.update_at_dev_board).fromNow(),
       "<span class=\"fa fa-exclamation\" aria-hidden=\"true\"></span>",
       item.open_issues_count,
       "<span class=\"fa fa-code-fork\" aria-hidden=\"true\"></span>",
