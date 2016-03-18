@@ -78,6 +78,7 @@
           atom.atom_url = "https://atom.io/packages/" + url.split("/").slice(-1);
           atom.atom_name = data.name;
           atom.type_of_dev_board = obj.name;
+          console.log(atom);
           resolve(atom);
         }
       });
